@@ -9,3 +9,4 @@ I would also like to receive feedbacks on usage as well as suggestions and advic
 
 ## Installation process
 You can see the source code here on github and you can download the installer for your device (see the setups folder). At the moment the only installer I've created is for Windows os, but in the future I'll try to create it for Linux and MacOS as well.
+palle
