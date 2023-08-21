@@ -1,11 +1,12 @@
 # Copyright (C) 2023 by adriano22jr.
-# Code Version: 1.0
+# Code Version: 1.1
 # Author = adriano22jr
 
 
 from typing import Optional, Tuple, Union
 from button_loader import *
 from uploader import *
+from remover import *
 from customframe import *
 import os, sys, pathlib
 import customtkinter, pygame
@@ -23,6 +24,17 @@ def resource_path(relative_path):
 
     return os.path.join(base_path, relative_path)
 
+# https://stackoverflow.com/questions/70405069/pyinstaller-executable-saves-files-to-temp-folder
+def get_script_folder():
+    # path of main .py or .exe when converted with pyinstaller
+    if getattr(sys, 'frozen', False):
+        script_path = os.path.dirname(sys.executable)
+    else:
+        script_path = os.path.dirname(
+            os.path.abspath(sys.modules['__main__'].__file__)
+        )
+    return script_path
+
 class PySound(customtkinter.CTk):
     def __init__(self, fg_color: str | Tuple[str, str] | None = None, **kwargs):
         super().__init__(fg_color, **kwargs)
@@ -32,7 +44,7 @@ class PySound(customtkinter.CTk):
         x, y = self.calculate_coords(self.__width, self.__height)
         self.geometry(f"{self.__width}x{self.__height}+{int(x)}+{int(y)}")
         self.resizable(width = False, height = False)        
-        self.iconbitmap(resource_path(str(ROOT_DIR) + "\\data\\icon.ico"))     
+        self.iconbitmap(get_script_folder() + "\\data\\icon.ico")
         self.title("SoundPy")
         customtkinter.set_appearance_mode("dark")
         
@@ -62,11 +74,14 @@ class PySound(customtkinter.CTk):
         self.__app_name = customtkinter.CTkLabel(self.__sidebar, text = "SoundPy", font = customtkinter.CTkFont(size = 20, weight = "bold"))
         self.__app_name.grid(row = 0, column = 0, padx = 20, pady = 10)
         
-        self.__app_versione = customtkinter.CTkLabel(self.__sidebar, text = "v1.0", font = customtkinter.CTkFont(size = 10))
-        self.__app_versione.grid(row = 0, column = 0, padx = 25, pady = 10, sticky = "e")
+        self.__app_version = customtkinter.CTkLabel(self.__sidebar, text = "v1.1", font = customtkinter.CTkFont(size = 10))
+        self.__app_version.grid(row = 0, column = 0, padx = 25, pady = 10, sticky = "e")
 
         self.__add_button = customtkinter.CTkButton(self.__sidebar, text = "Add a sound", command = self.add)
         self.__add_button.grid(row = 1, column = 0, padx = 20, pady = 10)  
+        
+        self.__remove_button = customtkinter.CTkButton(self.__sidebar, text = "Remove a sound", command = self.remove)
+        self.__remove_button.grid(row = 2, column = 0, padx = 20, pady = 10)  
 
         self.__appearance_mode_label = customtkinter.CTkLabel(self.__sidebar, text = "Appearance Mode:", anchor = "w")
         self.__appearance_mode_label.grid(row = 5, column = 0, padx = 20)
@@ -120,7 +135,10 @@ class PySound(customtkinter.CTk):
         self.__buttons = buttons
 
     def add(self):
-        upl = Uploader(self)     
+        upl = Uploader(self)    
+        
+    def remove(self):
+        rem = Remover(self)
         
     def change_appearance(self, new_appearance: str):
         customtkinter.set_appearance_mode(new_appearance)

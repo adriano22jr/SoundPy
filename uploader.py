@@ -1,5 +1,5 @@
 # Copyright (C) 2023 by adriano22jr.
-# Code Version: 1.0
+# Code Version: 1.1
 # Author = adriano22jr
 
 
@@ -23,6 +23,17 @@ def resource_path(relative_path):
 
     return os.path.join(base_path, relative_path)
 
+# https://stackoverflow.com/questions/70405069/pyinstaller-executable-saves-files-to-temp-folder
+def get_script_folder():
+    # path of main .py or .exe when converted with pyinstaller
+    if getattr(sys, 'frozen', False):
+        script_path = os.path.dirname(sys.executable)
+    else:
+        script_path = os.path.dirname(
+            os.path.abspath(sys.modules['__main__'].__file__)
+        )
+    return script_path
+
 class Uploader(customtkinter.CTkToplevel):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
@@ -32,9 +43,9 @@ class Uploader(customtkinter.CTkToplevel):
         x, y = self.calculate_coords(self.__width, self.__height)
         self.geometry(f"{self.__width}x{self.__height}+{int(x)}+{int(y)}")
         
-        self.iconbitmap(resource_path(str(ROOT_DIR) + "\\data\\icon.ico"))
+        self.iconbitmap(get_script_folder() + "\\data\\icon.ico")
         if platform.startswith("win"):
-            self.after(200, lambda: self.iconbitmap(resource_path(str(ROOT_DIR) + "\\data\\icon.ico")))
+            self.after(200, lambda: self.iconbitmap(get_script_folder() + "\\data\\icon.ico"))
             
         self.title("Upload")
         self.grab_set()
@@ -56,7 +67,7 @@ class Uploader(customtkinter.CTkToplevel):
         self.__frame = customtkinter.CTkFrame(self, corner_radius = 5)        
         self.__frame.pack(padx = 10, pady = 10, expand = True, fill = "both")
         
-        img = Image.open(resource_path(str(ROOT_DIR) + "\\data\\folder.png"))
+        img = Image.open(get_script_folder() + "\\data\\folder.png")
         img = img.resize((25, 25))
         btn_icon = ImageTk.PhotoImage(img)
         open_dialog = customtkinter.CTkButton(self.__frame, image = btn_icon, text = "", command = self.load, width = 30, height = 30)        
@@ -83,7 +94,7 @@ class Uploader(customtkinter.CTkToplevel):
     def save(self):
         self.__input_sound_name = self.__entry.get()        
         if self.__input_path is not None and self.__input_sound_name != "":
-            shutil.copy(self.__input_path, resource_path(str(ROOT_DIR) + "\\audio"))
+            shutil.copy(self.__input_path, get_script_folder() + "\\audio")
             
             filename = ntpath.basename(self.__input_path)
             

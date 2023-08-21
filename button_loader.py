@@ -1,5 +1,5 @@
 # Copyright (C) 2023 by adriano22jr.
-# Code Version: 1.0
+# Code Version: 1.1
 # Author = adriano22jr
 
 
