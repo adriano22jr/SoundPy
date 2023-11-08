@@ -33,7 +33,7 @@ def get_script_folder():
         script_path = os.path.dirname(
             os.path.abspath(sys.modules['__main__'].__file__)
         )
-    return script_path
+    return pathlib.Path(script_path)
 
 class PlayableFrame(customtkinter.CTkScrollableFrame):
     def __init__(self, master: any, width: int = 200, height: int = 200, corner_radius: int | str | None = None, border_width: int | str | None = None, bg_color: str | Tuple[str, str] = "transparent", fg_color: str | Tuple[str, str] | None = None, border_color: str | Tuple[str, str] | None = None, scrollbar_fg_color: str | Tuple[str, str] | None = None, scrollbar_button_color: str | Tuple[str, str] | None = None, scrollbar_button_hover_color: str | Tuple[str, str] | None = None, label_fg_color: str | Tuple[str, str] | None = None, label_text_color: str | Tuple[str, str] | None = None, label_text: str = "", label_font: tuple | CTkFont | None = None, label_anchor: str = "center", orientation: Literal['vertical', 'horizontal'] = "vertical"):
@@ -41,6 +41,6 @@ class PlayableFrame(customtkinter.CTkScrollableFrame):
         self.__reader = DataReader()
         
     def play(self, mixer, button):
-        sound_to_play = get_script_folder() + "\\audio\\" + self.__reader.find_sound(button.cget("text"))
+        sound_to_play = get_script_folder() / "audio" / self.__reader.find_sound(button.cget("text"))
         mixer.music.load(sound_to_play)
         mixer.music.play()

@@ -32,7 +32,7 @@ def get_script_folder():
         script_path = os.path.dirname(
             os.path.abspath(sys.modules['__main__'].__file__)
         )
-    return script_path
+    return pathlib.Path(script_path)
 
 class Remover(customtkinter.CTkToplevel):
     def __init__(self, *args, **kwargs) -> None:
@@ -43,9 +43,9 @@ class Remover(customtkinter.CTkToplevel):
         x, y = self.calculate_coords(self.__width, self.__height)
         self.geometry(f"{self.__width}x{self.__height}+{int(x)}+{int(y)}")
         
-        self.iconbitmap(get_script_folder() + "\\data\\icon.ico")
+        self.iconbitmap(get_script_folder() / "data/icon.ico")
         if platform.startswith("win"):
-            self.after(200, lambda: self.iconbitmap(get_script_folder() + "\\data\\icon.ico"))
+            self.after(200, lambda: self.iconbitmap(get_script_folder() / "data/icon.ico"))
             
         self.title("Remove")
         self.grab_set()
@@ -96,7 +96,7 @@ class Remover(customtkinter.CTkToplevel):
         
         for pos, couple in enumerate(couples):
             if couple[0] == button.cget("text"):
-                path = get_script_folder() + "\\audio\\" + str(couple[1])
+                path = get_script_folder() / "audio" + str(couple[1])
                 os.remove(path)
                 del couples[pos]
                 

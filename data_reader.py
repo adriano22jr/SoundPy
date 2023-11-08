@@ -27,7 +27,7 @@ def get_script_folder():
         script_path = os.path.dirname(
             os.path.abspath(sys.modules['__main__'].__file__)
         )
-    return script_path
+    return pathlib.Path(script_path)
 
 class DataReader():
     def __init__(self) -> None:
@@ -36,7 +36,7 @@ class DataReader():
     def load(self):
         couples = []
         try:
-            data = open(get_script_folder() + "\\data\\data.txt", "rb")
+            data = open(get_script_folder() / "data/data.txt", "rb")
             couples = pickle.load(data)
             data.close()
         except:
@@ -44,12 +44,12 @@ class DataReader():
         return couples
     
     def save(self, couples):
-        data = open(get_script_folder() + "\\data\\data.txt", "wb")
+        data = open(get_script_folder() / "data/data.txt", "wb")
         pickle.dump(couples, data)
         data.close()
         
     def find_sound(self, name):
-        data = open(get_script_folder() + "\\data\\data.txt", "rb")
+        data = open(get_script_folder() / "data/data.txt", "rb")
         couples = pickle.load(data)
         data.close()
         

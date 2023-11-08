@@ -8,7 +8,7 @@ from button_loader import *
 from uploader import *
 from remover import *
 from customframe import *
-import os, sys, pathlib
+import os, sys, pathlib, platform
 import customtkinter, pygame
 
 ROOT_DIR = pathlib.Path(os.path.dirname(sys.modules['__main__'].__file__)).resolve()
@@ -33,7 +33,7 @@ def get_script_folder():
         script_path = os.path.dirname(
             os.path.abspath(sys.modules['__main__'].__file__)
         )
-    return script_path
+    return pathlib.Path(script_path)
 
 class PySound(customtkinter.CTk):
     def __init__(self, fg_color: str | Tuple[str, str] | None = None, **kwargs):
@@ -43,8 +43,9 @@ class PySound(customtkinter.CTk):
         self.__height = 400
         x, y = self.calculate_coords(self.__width, self.__height)
         self.geometry(f"{self.__width}x{self.__height}+{int(x)}+{int(y)}")
-        self.resizable(width = False, height = False)        
-        self.iconbitmap(get_script_folder() + "\\data\\icon.ico")
+        self.resizable(width = False, height = False)       
+        self.iconbitmap(get_script_folder() / "data/icon.ico")
+            
         self.title("SoundPy")
         customtkinter.set_appearance_mode("dark")
         
