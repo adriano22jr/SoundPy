@@ -96,7 +96,7 @@ class Remover(customtkinter.CTkToplevel):
         
         for pos, couple in enumerate(couples):
             if couple[0] == button.cget("text"):
-                path = get_script_folder() / "audio" + str(couple[1])
+                path = get_script_folder() / "audio" / str(couple[1])
                 os.remove(path)
                 del couples[pos]
                 

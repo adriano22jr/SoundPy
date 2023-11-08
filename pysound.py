@@ -45,6 +45,7 @@ class PySound(customtkinter.CTk):
         self.geometry(f"{self.__width}x{self.__height}+{int(x)}+{int(y)}")
         self.resizable(width = False, height = False)       
         self.iconbitmap(get_script_folder() / "data/icon.ico")
+        print(platform.system())
             
         self.title("SoundPy")
         customtkinter.set_appearance_mode("dark")

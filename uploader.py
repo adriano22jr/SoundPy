@@ -45,7 +45,7 @@ class Uploader(customtkinter.CTkToplevel):
         
         self.iconbitmap(get_script_folder() / "data/icon.ico")
         if platform.startswith("win"):
-            self.after(200, lambda: self.iconbitmap(get_script_folder() / "/data/icon.ico"))
+            self.after(200, lambda: self.iconbitmap(get_script_folder() / "data/icon.ico"))
             
         self.title("Upload")
         self.grab_set()
