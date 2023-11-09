@@ -43,8 +43,11 @@ class PySound(customtkinter.CTk):
         self.__height = 400
         x, y = self.calculate_coords(self.__width, self.__height)
         self.geometry(f"{self.__width}x{self.__height}+{int(x)}+{int(y)}")
-        self.resizable(width = False, height = False)       
-        self.iconbitmap(get_script_folder() / "data/icon.ico")
+        self.resizable(width = False, height = False)    
+        
+        if platform.system().lower().startswith("win"):
+            self.iconbitmap(get_script_folder() / "data/icon.ico")
+        
         print(platform.system())
             
         self.title("SoundPy")

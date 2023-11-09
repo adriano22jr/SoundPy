@@ -42,12 +42,13 @@ class Remover(customtkinter.CTkToplevel):
         self.__height = 300
         x, y = self.calculate_coords(self.__width, self.__height)
         self.geometry(f"{self.__width}x{self.__height}+{int(x)}+{int(y)}")
-        
-        self.iconbitmap(get_script_folder() / "data/icon.ico")
+            
         if platform.startswith("win"):
+            self.iconbitmap(get_script_folder() / "data/icon.ico")
             self.after(200, lambda: self.iconbitmap(get_script_folder() / "data/icon.ico"))
             
         self.title("Remove")
+        self.wait_visibility()
         self.grab_set()
         self.resizable(width = False, height = False)
         

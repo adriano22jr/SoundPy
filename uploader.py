@@ -43,11 +43,12 @@ class Uploader(customtkinter.CTkToplevel):
         x, y = self.calculate_coords(self.__width, self.__height)
         self.geometry(f"{self.__width}x{self.__height}+{int(x)}+{int(y)}")
         
-        self.iconbitmap(get_script_folder() / "data/icon.ico")
         if platform.startswith("win"):
+            self.iconbitmap(get_script_folder() / "data/icon.ico")
             self.after(200, lambda: self.iconbitmap(get_script_folder() / "data/icon.ico"))
             
         self.title("Upload")
+        self.wait_visibility()
         self.grab_set()
         self.resizable(width = False, height = False)
         
